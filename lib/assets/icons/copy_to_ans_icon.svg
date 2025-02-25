@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed" xmlns:bx="https://boxy-svg.com">
+  <path d="M 159 -166 C 137 -166 118.167 -173.83 102.5 -189.5 C 86.833 -205.17 79 -224 79 -246 L 76 -740 C 76 -762 83.833 -780.83 99.5 -796.5 C 115.167 -812.17 134 -820 156 -820 L 732.005 -816.21 C 731.978 -816.93 791.734 -809.92 792.158 -798.64 C 812.693 -795.67 821.578 -736.04 816.322 -736.8 L 814 -401 L 746.786 -400.48 L 748.262 -746.2 L 146.824 -748.64 L 147.291 -241.41 L 599.331 -243.746 L 599 -166 L 159 -166 Z M 863 -79 L 745 -197 L 745 -108 L 665 -108 L 665 -334 L 891 -334 L 891 -254 L 801 -254 L 919 -136 L 863 -79 Z"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Montserrat; font-size: 250px; font-weight: 800; white-space: pre;" x="173.385" y="-402.53">ANS</text>
+  <defs>
+    <style bx:fonts="Montserrat">@import url(https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900%3B1%2C100..900&amp;display=swap);</style>
+  </defs>
+</svg>
