@@ -20,6 +20,7 @@ class HistoryModel extends ChangeNotifier {
   static const historyKey = 'history';
 
   List<HistoryItem> get history => _history;
+  HistoryItem? get lastResult => _history.isNotEmpty ? _history.first : null;
 
   Future<void> init() async {
     _prefs = await SharedPreferencesWithCache.create(

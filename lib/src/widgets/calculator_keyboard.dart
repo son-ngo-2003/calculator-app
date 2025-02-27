@@ -45,6 +45,7 @@ class CalculatorKeyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final formulaModel = Provider.of<FormuleModel>(context);
     final historyModel = Provider.of<HistoryModel>(context);
+    formulaModel.setAns( historyModel.lastResult?.result, notify: false);
     final theme = Theme.of(context);
 
     final listButtons = keyboardKeys.map( (CalculatorKeyItem key) => 

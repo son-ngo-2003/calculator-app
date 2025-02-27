@@ -7,6 +7,7 @@ class FormuleModel extends ChangeNotifier {
   List<String> inputValues = [];
   double? result;
   Exception? error;
+  bool justGetError = false;
 
   String? get previousResult => ans?.toString();
   String get expressionDisplay => inputValues.join(' ');
@@ -17,6 +18,9 @@ class FormuleModel extends ChangeNotifier {
     if (value.isEmpty) return;
     if (result != null) {
       inputValues.clear();
+      if (!isNumericString(value)) { 
+        inputValues.add('ANS');
+      }
       result = null;
     }
     
@@ -62,6 +66,12 @@ class FormuleModel extends ChangeNotifier {
       return (result!, expressionDisplay);
     } catch (e) {
       error = e as Exception;
+      justGetError = true;
+      Future.delayed(Duration(milliseconds: 500), () {
+        justGetError = false;
+        notifyListeners();
+      });
+
       developer.log('Error: ${error.toString()}');
       return null;
     } finally {
@@ -74,8 +84,8 @@ class FormuleModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAns(double value) {
+  void setAns(double? value, {bool notify = true}) {
     ans = value;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 }
