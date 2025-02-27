@@ -15,9 +15,12 @@ class HistoryModel extends ChangeNotifier {
   factory HistoryModel() => _instance;
   HistoryModel._internal();
 
-  List<HistoryItem> _history = [];
+  // for shared preferences
   SharedPreferencesWithCache? _prefs;
   static const historyKey = 'history';
+
+  List<HistoryItem> _history = [];
+  HistoryItem? lastestDeletedItem;
 
   List<HistoryItem> get history => _history;
   HistoryItem? get lastResult => _history.isNotEmpty ? _history.first : null;
@@ -38,6 +41,7 @@ class HistoryModel extends ChangeNotifier {
   }
 
   void removeHistory(int id) {
+    lastestDeletedItem = _history.firstWhere((item) => item.id == id);
     _history.removeWhere((item) => item.id == id);
     saveHistory();
     notifyListeners();

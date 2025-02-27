@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:vibration/vibration.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:provider/provider.dart';
 import 'package:second_app/src/models/formule_model.dart';
@@ -24,12 +24,19 @@ class _CalculatorDisplayState extends State<CalculatorDisplay> {
     });
   }
 
+  void _vibrationHandler() async {
+    if (resultNotifier.justGetError && await Vibration.hasVibrator())  {
+      Vibration.vibrate(duration: 200);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){ 
       resultNotifier = Provider.of<FormuleModel>(context, listen: false);
       resultNotifier.addListener(_scrollToEnd);
+      resultNotifier.addListener(_vibrationHandler);
     });
   }
 
