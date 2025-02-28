@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_app/src/widgets/long_pressable_text.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +88,7 @@ class _CalculatorDisplayState extends State<CalculatorDisplay> {
                         style: theme.textTheme.displayMedium?.copyWith( color: formule.errorMessage == null ? theme.textTheme.displayMedium?.color : Colors.red ) 
                                 ?? TextStyle(), 
                         duration: Duration(milliseconds: 200),
-                        child: Text(mainDisplay, maxLines: 1,), 
+                        child: LongPressableText(child: Text(mainDisplay, maxLines: 1,)), 
                       ),
                     ),
                     SizedBox(height: 5),

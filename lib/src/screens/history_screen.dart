@@ -16,6 +16,7 @@ class HistoryScreen extends StatelessWidget {
             Column(
               children: [
                 Expanded( child: HistoryList(),),
+                if (history.history.isNotEmpty)
                 FilledButton(
                   onPressed: () => history.clearHistory(),
                   child: Text('Clear History'),
