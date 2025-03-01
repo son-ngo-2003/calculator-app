@@ -7,7 +7,6 @@ class CalculatorKey extends StatelessWidget {
   final String? text;
   final IconData? icon;
 
-
   final VoidCallback? onTap;
   final Color? textColor;
   final Color? backgroundColor;

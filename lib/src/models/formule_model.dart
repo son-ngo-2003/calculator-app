@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:second_app/src/data/constants.dart';
 import 'package:second_app/src/utils/formule.dart';
 
 class FormuleModel extends ChangeNotifier {
@@ -9,38 +10,48 @@ class FormuleModel extends ChangeNotifier {
   Exception? error;
   bool justGetError = false;
 
-  String? get previousResult => ans?.toString();
+  String? get previousResult => toStringAsFixed(ans, numberDecimalDigitsShow);
   String get expressionDisplay => inputValues.join(' ');
   String? get errorMessage => error?.toString().substring(11); // remove 'Exception:'
-  String? get formuleResult => result?.toString();
+  String? get formuleResult => toStringAsFixed(ans, numberDecimalDigitsShow);
 
-  void addChar(String value) {
+  void addSymbol(String value) {
     if (value.isEmpty) return;
     if (result != null) {
       inputValues.clear();
-      if (!isNumericString(value)) { 
-        inputValues.add('ANS');
-      }
       result = null;
+
+      if (isFunctionString(value)) {
+        inputValues
+          ..add(value)
+          ..add('(')
+          ..add('ANS');
+        return;
+      } else if (!isNumericString(value)) { 
+        inputValues.add('ANS');
+      }  
     }
-    
+
+    // if the input is empty, add the value
     if (inputValues.isEmpty) {
       inputValues.add(value);
       notifyListeners();
       return;
     } 
 
+    // if the last element is a number, and input is a number so add the value to the last element
     if (isNumericString(inputValues.last) && (isNumericString(value) || value == '.')) {
       inputValues[inputValues.length - 1] += value;
       notifyListeners();
       return;
     } 
     
+    // other case
     inputValues.add(value);
     notifyListeners();
   }
 
-  void removeLastChar() {
+  void removeLastSymbol() {
     if (inputValues.isEmpty) return; 
 
     if (isNumericString(inputValues.last) && inputValues.last.length > 1) {
@@ -61,7 +72,7 @@ class FormuleModel extends ChangeNotifier {
 
   (double, String)? calculateFormule() {
     try {
-      result = evaluateFormule(inputValues, ans);
+      result = evaluateFormule(expressionDisplay, ans);
       ans = result;
       return (result!, expressionDisplay);
     } catch (e) {

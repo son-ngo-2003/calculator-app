@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 enum KeyType {
   number,
   operation,
-  action
+  action,
+  function,
 }
 
 class CalculatorKeyItem {

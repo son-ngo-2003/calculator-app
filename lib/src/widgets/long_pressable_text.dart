@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LongPressableText extends StatelessWidget {
+class LongPressableText extends StatefulWidget {
   const LongPressableText({super.key, required this.child});
 
   final Text child;
 
-  void _showMenu(BuildContext context, TapDownDetails details) async {
+  @override
+  State<LongPressableText> createState() => _LongPressableTextState();
+}
+
+class _LongPressableTextState extends State<LongPressableText> {
+  late Offset tapPosition;
+
+  void _setTapPosition(TapDownDetails details) {
+    setState(() {
+      tapPosition = details.globalPosition;
+    });
+  }
+
+  void _showMenu(BuildContext context) async {
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-    final Offset tapPosition = details.globalPosition;
 
     final result = await showMenu(
       position: RelativeRect.fromLTRB(tapPosition.dx, tapPosition.dy, overlay.size.width - tapPosition.dx, overlay.size.height - tapPosition.dy,),
@@ -26,16 +38,19 @@ class LongPressableText extends StatelessWidget {
     );
 
     if (result == 'copy') {
-      Clipboard.setData(ClipboardData(text: child.data ?? ''));
+      Clipboard.setData(ClipboardData(text: widget.child.data ?? ''));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: child,
+      child: widget.child,
       onTapDown: (details) {
-        _showMenu(context, details);
+        _setTapPosition(details);
+      },
+      onLongPress: () {
+        _showMenu(context);
       },
     );
   }

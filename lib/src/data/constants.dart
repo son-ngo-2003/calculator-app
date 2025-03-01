@@ -1,0 +1,1 @@
+const numberDecimalDigitsShow = 5;

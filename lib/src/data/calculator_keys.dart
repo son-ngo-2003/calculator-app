@@ -27,3 +27,17 @@ List<CalculatorKeyItem> keyboardKeys = [
   CalculatorKeyItem(label: '.', text: '.', keyType: KeyType.operation),
   CalculatorKeyItem(label: 'equal', text: '=', keyType: KeyType.action),
 ];
+
+List<CalculatorKeyItem> extendKeyboardKeys = [
+  CalculatorKeyItem(label: '(', text: '(', keyType: KeyType.operation),
+  CalculatorKeyItem(label: ')', text: ')', keyType: KeyType.operation),
+  CalculatorKeyItem(label: 'sqrt', text: '\u221A', keyType: KeyType.function),
+
+  CalculatorKeyItem(label: 'π', text: '\u03C0', keyType: KeyType.number),
+  CalculatorKeyItem(label: 'e', text: 'e', keyType: KeyType.number),
+  CalculatorKeyItem(label: '^', text: '^', keyType: KeyType.operation),
+
+  CalculatorKeyItem(label: 'sin', text:'sin', keyType: KeyType.operation),
+  CalculatorKeyItem(label: 'cos', text: 'cos', keyType: KeyType.operation),
+  CalculatorKeyItem(label: 'tan', text: 'tan', keyType: KeyType.operation),
+];

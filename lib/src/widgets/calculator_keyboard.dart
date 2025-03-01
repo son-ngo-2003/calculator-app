@@ -23,15 +23,18 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
       isExtendedKeyboardOpen = !isExtendedKeyboardOpen;
     });
   }
-
+  
   void handleKeyTap( CalculatorKeyItem key, FormuleModel formulaModel, HistoryModel historyModel ) {
     formulaModel.clearError();
     switch (key.keyType) {
       case KeyType.number:
-        formulaModel.addChar(key.label);
+        formulaModel.addSymbol(key.label);
         break;
       case KeyType.operation:
-        formulaModel.addChar(key.label);
+        formulaModel.addSymbol(key.label);
+        break;
+      case KeyType.function:
+        formulaModel.addSymbol(key.label);
         break;
       case KeyType.action:
 
@@ -40,7 +43,7 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
             formulaModel.clearDisplay();
             break;
           case 'delete':
-            formulaModel.removeLastChar();
+            formulaModel.removeLastSymbol();
             break;
           case 'equal':
             final res = formulaModel.calculateFormule();
@@ -82,6 +85,7 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
         backgroundColor: key.label == 'equal' || (isExtendedKeyboardOpen && key.label == 'more') 
                     ? theme.colorScheme.primaryContainer 
                     : theme.colorScheme.surfaceContainerLowest,
+        usingAlternative: (isExtendedKeyboardOpen && key.label == 'more'),
       )
     ).toList();
 
