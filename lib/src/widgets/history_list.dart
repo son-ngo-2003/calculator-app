@@ -60,7 +60,6 @@ class _HistoryListState extends State<HistoryList> with AutomaticKeepAliveClient
       );
 
       historyNotifier.addListener(_updateList);
-      print(_listKey.currentState);
     });
   }
 

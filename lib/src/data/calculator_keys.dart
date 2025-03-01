@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:second_app/src/models/calculator_key_item.dart';
 
 List<CalculatorKeyItem> keyboardKeys = [
+  CalculatorKeyItem(label: 'more', icon: Icons.more_vert_outlined, alternativeIcon: Icons.close_outlined, keyType: KeyType.action),
   CalculatorKeyItem(label: 'clear', text: 'C', keyType: KeyType.action),
   CalculatorKeyItem(label: 'delete', icon: Icons.backspace_outlined, keyType: KeyType.action),
-  CalculatorKeyItem(label: '%', text: '%', keyType: KeyType.operation),
   CalculatorKeyItem(label: '/', text: '/', keyType: KeyType.operation),
 
   CalculatorKeyItem(label: '7', text: '7', keyType: KeyType.number),
