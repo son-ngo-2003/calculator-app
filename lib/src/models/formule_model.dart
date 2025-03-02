@@ -13,7 +13,7 @@ class FormuleModel extends ChangeNotifier {
   String? get previousResult => toStringAsFixed(ans, numberDecimalDigitsShow);
   String get expressionDisplay => inputValues.join(' ');
   String? get errorMessage => error?.toString().substring(11); // remove 'Exception:'
-  String? get formuleResult => toStringAsFixed(ans, numberDecimalDigitsShow);
+  String? get formuleResult => toStringAsFixed(result, numberDecimalDigitsShow);
 
   void addSymbol(String value) {
     if (value.isEmpty) return;

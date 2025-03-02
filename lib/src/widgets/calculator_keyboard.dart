@@ -23,6 +23,18 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
       isExtendedKeyboardOpen = !isExtendedKeyboardOpen;
     });
   }
+
+  void openExtendedKeyboard() {
+    setState(() {
+      isExtendedKeyboardOpen = true;
+    });
+  }
+
+  void closeExtendedKeyboard() {
+    setState(() {
+      isExtendedKeyboardOpen = false;
+    });
+  }
   
   void handleKeyTap( CalculatorKeyItem key, FormuleModel formulaModel, HistoryModel historyModel ) {
     formulaModel.clearError();
@@ -53,7 +65,11 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
             }
             break;
           case 'more':
-              toggleExtendedKeyboard();
+              if (isExtendedKeyboardOpen) {
+                closeExtendedKeyboard();
+              } else {
+                openExtendedKeyboard();
+              }
               break;
           default:
             break;
@@ -118,28 +134,45 @@ class _CalculatorKeyboardState extends State<CalculatorKeyboard> {
     
         // if (isExtendedKeyboardOpen)
         Transform.translate(
-          offset: Offset(14.0, keyboardWidth / 4 - 12.0),
-          child: AnimatedClipRect(
-            duration: Duration(milliseconds: 400),
-            open: isExtendedKeyboardOpen,
-            curve: Curves.easeOut,
-
-            child: SizedBox(
-              width: keyboardWidth * 3 / 4 - 20.0,
-              height: null,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 29.0),
-                    width: 35.0,
-                    height: 10.0,
-                    color: theme.colorScheme.primaryContainer,
-                  ),
-                  ExtendCalculatorKeyboard(),
-                ],
+          offset: Offset(14.0, 0.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container( // to prevent conflict between TapRegion tapOutside and toggle menu button 
+                width: keyboardWidth / 4 - 16.0,
+                height: keyboardWidth / 4 - 12.0,
+                color: (isExtendedKeyboardOpen) ? Colors.transparent : null
               ),
-            ),
+              
+              AnimatedClipRect(
+                duration: Duration(milliseconds: 400),
+                open: isExtendedKeyboardOpen,
+                curve: Curves.easeOut,
+              
+                child: TapRegion(
+                  onTapOutside: (_){ closeExtendedKeyboard(); },
+                  child: SizedBox(
+                    width: keyboardWidth * 3 / 4 - 20.0,
+                    height: null,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        
+                        Container(
+                          margin: EdgeInsets.only(left: 29.0),
+                          width: 35.0,
+                          height: 10.0,
+                          color: theme.colorScheme.primaryContainer,
+                        ),
+                                
+                        ExtendCalculatorKeyboard(), 
+                        // ExtendCalculatorKeyboard()
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ], 

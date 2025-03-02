@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:second_app/src/data/constants.dart';
 import 'package:second_app/src/utils/base.dart';
+import 'package:second_app/src/utils/formule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryItem {
-  HistoryItem({required this.formule, required this.result});
+  HistoryItem({required this.formule, required this.result}) : id = generateId();
+  HistoryItem.withId({required this.id, required this.formule, required this.result});
 
-  final int id = generateId();
+  final int id;
   final String formule;
   final double result;
 }
@@ -35,7 +38,8 @@ class HistoryModel extends ChangeNotifier {
   }
 
   void addHistory(String formule, double result) {
-    _history.insert(0, HistoryItem(formule: formule, result: result));
+    final roundedResult = double.parse( toStringAsFixed(result, numberDecimalDigitsShow) ?? 'NaN');
+    _history.insert(0, HistoryItem(formule: formule, result: roundedResult));
     saveHistory();
     notifyListeners();
   }
@@ -54,7 +58,7 @@ class HistoryModel extends ChangeNotifier {
   }
 
   Future<void> saveHistory() async {
-    final List<String> historyList = _history.map((item) => '${item.formule}:${item.result}').toList();
+    final List<String> historyList = _history.map((item) => '${item.id}__${item.formule}__${item.result}').toList();
     await _prefs?.setStringList(historyKey, historyList);
   }
 
@@ -62,8 +66,8 @@ class HistoryModel extends ChangeNotifier {
     final List<String>? historyList = _prefs?.getStringList(historyKey);
     if (historyList != null) {
       _history = historyList.map((item) {
-        final List<String> split = item.split(':');
-        return HistoryItem(formule: split[0], result: double.parse(split[1]));
+        final List<String> split = item.split('__');
+        return HistoryItem.withId(id: int.parse(split[0]), formule: split[1], result: double.parse(split[2]));
       }).toList();
     } else {
       _history = [];

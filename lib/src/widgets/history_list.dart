@@ -33,8 +33,8 @@ class _HistoryListState extends State<HistoryList> with AutomaticKeepAliveClient
       indList++;
     }
 
-    for (int i = indList; i < _list.length; i++) {
-      _list.removeAt(i);
+    while (_list.length > history.length) {
+      _list.removeAt(_list.length - 1);
     }
   }
 
